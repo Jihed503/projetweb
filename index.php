@@ -66,8 +66,8 @@
       </li>
   
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="index.html" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>        <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="afficherEtudiants.html">Lister tous les étudiants</a>
+        <a class="nav-link dropdown-toggle" href="index.php" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="afficherEtudiants.php">Lister tous les étudiants</a>
           <a class="dropdown-item" href="afficherEtudiantsParClasse.html">Etudiants par Groupe</a>
           <a class="dropdown-item" href="#">Ajouter Groupe</a>
           <a class="dropdown-item" href="#">Modifier Groupe</a>
@@ -78,7 +78,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Etudiants</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="ajouterEtudiant.html">Ajouter Etudiant</a>
+          <a class="dropdown-item" href="AjouterEtudiant.php">Ajouter Etudiant</a>
           <a class="dropdown-item" href="#">Chercher Etudiant</a>
           <a class="dropdown-item" href="#">Modifier Etudiant</a>
           <a class="dropdown-item" href="#">Supprimer Etudiant</a>
