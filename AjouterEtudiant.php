@@ -41,14 +41,14 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="index.html" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>
+                <a class="nav-link dropdown-toggle" href="index.php" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="afficherEtudiants.html">Lister tous les étudiants</a>
-                    <a class="dropdown-item" href="afficherEtudiantsParClasse.html">Etudiants par Groupe</a>
+                    <a class="dropdown-item" href="afficherEtudiants.php">Lister tous les étudiants</a>
+                    <a class="dropdown-item" href="afficherEtudiantsParClasse.php">Etudiants par Groupe</a>
                     <a class="dropdown-item" href="#">Ajouter Groupe</a>
                     <a class="dropdown-item" href="#">Modifier Groupe</a>
                     <a class="dropdown-item" href="#">Supprimer Groupe</a>
@@ -58,7 +58,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Etudiants</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="ajouterEtudiant.html">Ajouter Etudiant</a>
+                    <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
                     <a class="dropdown-item" href="#">Chercher Etudiant</a>
                     <a class="dropdown-item" href="#">Modifier Etudiant</a>
                     <a class="dropdown-item" href="#">Supprimer Etudiant</a>
@@ -69,8 +69,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Absences</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="saisirAbsence.html">Saisir Absence</a>
-                    <a class="dropdown-item" href="etatAbsence.html">État des absences pour un groupe</a>
+                    <a class="dropdown-item" href="saisirAbsence.php">Saisir Absence</a>
+                    <a class="dropdown-item" href="etatAbsence.php">État des absences pour un groupe</a>
                 </div>
             </li>
 

@@ -46,9 +46,9 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="index.html" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="nav-link dropdown-toggle" href="index.php" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>              <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="AfficherEtudiants.php">Lister tous les étudiants</a>
-                    <a class="dropdown-item" href="afficherEtudiantsParClasse.html">Etudiants par Groupe</a>
+                    <a class="dropdown-item" href="afficherEtudiantsParClasse.php">Etudiants par Groupe</a>
                     <a class="dropdown-item" href="#">Ajouter Groupe</a>
                     <a class="dropdown-item" href="#">Modifier Groupe</a>
                     <a class="dropdown-item" href="#">Supprimer Groupe</a>
@@ -69,8 +69,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Absences</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="saisirAbsence.html">Saisir Absence</a>
-                    <a class="dropdown-item" href="etatAbsence.html">État des absences pour un groupe</a>
+                    <a class="dropdown-item" href="saisirAbsence.php">Saisir Absence</a>
+                    <a class="dropdown-item" href="etatAbsence.php">État des absences pour un groupe</a>
                 </div>
             </li>
 
