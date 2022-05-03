@@ -60,7 +60,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
                     <a class="dropdown-item" href="#">Chercher Etudiant</a>
-                    <a class="dropdown-item" href="#">Modifier Etudiant</a>
+                    <a class="dropdown-item" href="ModifierEtudiants.php">Modifier Etudiant</a>
                     <a class="dropdown-item" href="#">Supprimer Etudiant</a>
 
 
