@@ -23,7 +23,7 @@ include("connexion.php");
          if(count($tab)>0)
             $erreur="NOT OK";// Etudiant existe déja
          else{
-            $req="insert into etudiant values ($cin,'$email',md5('$pwd'),md5('$cpwd'),'$nom','$prenom','$adresse','$classe')";
+            $req="insert into etudiant values ($cin,'$email',md5('$pwd'),'$nom','$prenom','$adresse','$classe')";
             $reponse = $pdo->exec($req) or die("error");
             header("location:AfficherEtudiants.php");
             $erreur ="OK";
