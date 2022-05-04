@@ -98,7 +98,7 @@
 
 
     <div class="container">
-        <form id="myform" method="GET" action="ajouter.php">
+        <form id="myform" method="POST" action="ajouter.php">
             <!--
                                TODO: Add form inputs
                                Prenom - required string with autofocus
@@ -150,15 +150,16 @@
             <div class="form-group">
                 <label for="adresse">Adresse:</label><br>
                 <textarea id="adresse" name="adresse" rows="10" cols="30" class="form-control" required>
-     </textarea>
+                </textarea>
             </div>
             <!--Bouton Ajouter-->
-            <button  type="submit" class="btn btn-primary btn-block"onclick="ajouter()">Ajouter</button>
+            <button type="submit" class="btn btn-primary btn-block" onclick="ajouter()">Ajouter</button>
 
 
 
         </form>
     </div>
+    <div id="demo"></div>
 </main>
 
 
@@ -169,14 +170,14 @@
 <script  src="./assets/dist/js/inscrire.js"></script>
 <script>
     function ajouter()
-    {
+    {   
         var xmlhttp = new XMLHttpRequest();
         var url="http://localhost/projetweb/ajouter.php";
 
         //Envoie Req
         xmlhttp.open("POST",url,true);
 
-        form=document.getElementById("myForm");
+        form=document.getElementById("myform");
         formdata=new FormData(form);
 
         xmlhttp.send(formdata);

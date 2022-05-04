@@ -25,7 +25,7 @@ include("connexion.php");
          else{
             $req="insert into etudiant values ($cin,'$email',md5('$pwd'),'$nom','$prenom','$adresse','$classe')";
             $reponse = $pdo->exec($req) or die("error");
-            header("location:AfficherEtudiants.php");
+            //header("location:AfficherEtudiants.php");
             $erreur ="OK";
          }  
          echo $erreur;
