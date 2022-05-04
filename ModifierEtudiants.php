@@ -60,7 +60,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
                     <a class="dropdown-item" href="#">Chercher Etudiant</a>
-                    <a class="dropdown-item" href="ModifierEtudiants.php">Modifier Etudiant</a>
+                    <a class="dropdown-item" href="ModifierListeEtudiants.php">Modifier Etudiant</a>
                     <a class="dropdown-item" href="#">Supprimer Etudiant</a>
 
 
@@ -75,7 +75,7 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="#">Se Déconnecter <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="deconnexion.php">Se Déconnecter <span class="sr-only">(current)</span></a>
             </li>
 
         </ul>
@@ -98,6 +98,24 @@
 
 
     <div class="container">
+    <?php
+        include("connexion.php");
+        //$req="SELECT * FROM etudiant";
+        //$reponse = $pdo->query($req);
+
+        $userid = $_GET['cin'];
+        $useridstr = intval ($_GET['cin']);
+        $sql ="select * FROM etudiant where cin=:nouvelleid";
+
+        $query = $pdo->prepare($sql);
+        $query->bindParam(':nouvelleid', $useridstr , PDO::PARAM_STR);
+        $query->execute();
+
+        $resultat= $query->fetchAll(PDO::FETCH_OBJ);
+
+        foreach ($resultat as $row)
+        {
+        ?>
         <form id="myform" method="GET" action="modifier.php">
             <!--
                                TODO: Add form inputs
@@ -113,50 +131,55 @@
             <!--CIN-->
             <div class="form-group">
                 <label for="cin">CIN:</label><br>
-                <input type="text" id="cin" name="cin"  class="form-control" required pattern="[0-9]{8}" title="8 chiffres"/>
+                <input readonly type="text" id="cin" name="cin"  class="form-control" required pattern="[0-9]{8}" title="8 chiffres" value="<?php echo $row->cin; ?>"/>
             </div>
+            
             <!--Nom-->
             <div class="form-group">
                 <label for="nom">Nom:</label><br>
-                <input type="text" id="nom" name="nom" class="form-control" required autofocus>
+                <input type="text" id="nom" name="nom" class="form-control" required autofocus value="<?php echo $row->nom; ?>">
             </div>
             <!--Prénom-->
             <div class="form-group">
                 <label for="prenom">Prénom:</label><br>
-                <input type="text" id="prenom" name="prenom" class="form-control" required>
+                <input type="text" id="prenom" name="prenom" class="form-control" required value="<?php echo $row->prenom; ?>">
             </div>
             <!--Email-->
             <div class="form-group">
                 <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" class="form-control" required>
+                <input type="email" id="email" name="email" class="form-control" required value="<?php echo $row->email; ?>">
             </div>
+            
             <!--Password-->
+            <!--ConfirmPassword-->
+            <!--
             <div class="form-group">
                 <label for="pwd">Mot de passe:</label><br>
-                <input type="password" id="pwd" name="pwd" class="form-control"  required pattern="[a-zA-Z0-9]{8,}" title="Au moins 8 lettres et nombres"/>
+                <input type="password" id="pwd" name="pwd" class="form-control"  required pattern="[a-zA-Z0-9]{8,}" title="Au moins 8 lettres et nombres" value="<?php echo $row->password; ?>"/>
             </div>
-            <!--ConfirmPassword-->
+            
             <div class="form-group">
                 <label for="cpwd">Confirmer Mot de passe:</label><br>
                 <input type="password" id="cpwd" name="cpwd" class="form-control"  required/>
             </div>
+            -->
             <!--Classe-->
             <div class="form-group">
                 <label for="classe">Classe:</label><br>
                 <input type="text" id="classe" name="classe" class="form-control" required pattern="INFO[1-3]{1}-[A-E]{1}"
-                       title="Pattern INFOX-X. Par Exemple: INFO1-A, INFO2-E, INFO3-C">
+                       title="Pattern INFOX-X. Par Exemple: INFO1-A, INFO2-E, INFO3-C" value="<?php echo $row->Classe; ?>">
             </div>
             <!--Adresse-->
             <div class="form-group">
                 <label for="adresse">Adresse:</label><br>
-                <textarea id="adresse" name="adresse" rows="10" cols="30" class="form-control" required>
+                <textarea id="adresse" name="adresse" rows="10" cols="30" class="form-control" required value="<?php echo $row->adresse; ?>">
      </textarea>
             </div>
             <!--Bouton modifier-->
             <button  type="submit" class="btn btn-primary btn-block"onclick="modifier()">Modifier</button>
 
 
-
+            <?php } ?>
         </form>
     </div>
 </main>
@@ -166,8 +189,8 @@
     <p>&copy; ENICAR 2021-2022</p>
 </footer>
 
-<script  src="./assets/dist/js/inscrire.js"></script>
 <script>
+
     function modifier()
     {
         var xmlhttp = new XMLHttpRequest();
@@ -182,7 +205,7 @@
         xmlhttp.send(formdata);
 
         //Traiter Res
-
+        /*
         xmlhttp.onreadystatechange=function()
         {
             if(this.readyState==4 && this.status==200){
@@ -198,7 +221,7 @@
                     document.getElementById("demo").style.backgroundColor="#fba";
                 }
             }
-        }
+        }*/
 
 
     }
