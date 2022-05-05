@@ -172,7 +172,9 @@
             <!--Adresse-->
             <div class="form-group">
                 <label for="adresse">Adresse:</label><br>
+
                 <textarea id="adresse" name="adresse" rows="10" cols="30" class="form-control" required ><?php echo $row->adresse; ?> </textarea>
+
             </div>
             <!--Bouton modifier-->
             <button  type="submit" class="btn btn-primary btn-block"onclick="modifier()">Modifier</button>
