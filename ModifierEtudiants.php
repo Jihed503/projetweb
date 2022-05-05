@@ -59,7 +59,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Etudiants</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
-                    <a class="dropdown-item" href="#">Chercher Etudiant</a>
+                    <a class="dropdown-item" href="ChercherEtudiants.php">Chercher Etudiant</a>
                     <a class="dropdown-item" href="ModifierListeEtudiants.php">Modifier Etudiant</a>
                     <a class="dropdown-item" href="#">Supprimer Etudiant</a>
 
@@ -172,11 +172,7 @@
             <!--Adresse-->
             <div class="form-group">
                 <label for="adresse">Adresse:</label><br>
-<<<<<<< HEAD
                 <textarea id="adresse" name="adresse" rows="10" cols="30" class="form-control" required ><?php echo $row->adresse; ?> </textarea>
-=======
-                <textarea id="adresse" name="adresse" rows="10" cols="30" class="form-control" required value="<?php echo $row->adresse; ?>"> </textarea>
->>>>>>> 31848d2b8052aac07f6d5945e6c7fea9a6451cc4
             </div>
             <!--Bouton modifier-->
             <button  type="submit" class="btn btn-primary btn-block"onclick="modifier()">Modifier</button>

@@ -59,7 +59,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Etudiants</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
-                    <a class="dropdown-item" href="#">Chercher Etudiant</a>
+                    <a class="dropdown-item" href="ChercherEtudiants.php">Chercher Etudiant</a>
                     <a class="dropdown-item" href="ModifierListeEtudiants.php">Modifier Etudiant</a>
                     <a class="dropdown-item" href="#">Supprimer Etudiant</a>
 
@@ -98,7 +98,8 @@
 
 
     <div class="container">
-        <form id="myform" method="POST" action="ajouter.php">
+    <div id="demo"></div>
+        <form id="myform" method="POST">
             <!--
                                TODO: Add form inputs
                                Prenom - required string with autofocus
@@ -153,13 +154,12 @@
                 </textarea>
             </div>
             <!--Bouton Ajouter-->
-            <button type="submit" class="btn btn-primary btn-block" onclick="ajouter()">Ajouter</button>
+            <button onclick="ajouter()" type="submit" class="btn btn-primary btn-block" >Ajouter</button>
 
 
 
         </form>
     </div>
-    <div id="demo"></div>
 </main>
 
 
@@ -174,16 +174,18 @@
         var xmlhttp = new XMLHttpRequest();
         var url="http://localhost/projetweb/ajouter.php";
 
+        
         //Envoie Req
         xmlhttp.open("POST",url,true);
-
-        form=document.getElementById("myform");
-        formdata=new FormData(form);
+        //console.log("before");
+        const form=document.getElementById("myform");
+        // alert("after");
+        const formdata=new FormData(form);
 
         xmlhttp.send(formdata);
 
         //Traiter Res
-
+        
         xmlhttp.onreadystatechange=function()
         {
             if(this.readyState==4 && this.status==200){
