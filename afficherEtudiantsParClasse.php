@@ -32,6 +32,7 @@ else{
 $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,21 +41,16 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCO-ENICAR Etudiants Par CLasse</title>
     <!-- Bootstrap core CSS -->
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap core JS-JQUERY -->
-    <script src="./assets/dist/js/jquery.min.js"></script>
-    <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets/dist/js/jquery.min.js"></script>
+<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom styles for this template -->
-    <link href="./assets/jumbotron.css" rel="stylesheet">
-    <style>
-        #input{width:170px;}
-    </style>
+    <link href="./assets/dist/css/jumbotron.css" rel="stylesheet">
 
 </head>
-
-<body onload="refresh()">
-
+<body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#">SCO-Enicar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,9 +68,9 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="afficherEtudiants.php">Lister tous les étudiants</a>
                     <a class="dropdown-item" href="afficherEtudiantsParClasse.php">Etudiants par Groupe</a>
-                    <a class="dropdown-item" href="AjouterGroupe.php">Ajouter Groupe</a>
-                    <a class="dropdown-item" href="ModifierGroupe.php">Modifier Groupe</a>
-                    <a class="dropdown-item" href="SupprimerGroupe.php">Supprimer Groupe</a>
+                    <a class="dropdown-item" href="#">Ajouter Groupe</a>
+                    <a class="dropdown-item" href="#">Modifier Groupe</a>
+                    <a class="dropdown-item" href="#">Supprimer Groupe</a>
 
                 </div>
             </li>
@@ -84,7 +80,7 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
                     <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
                     <a class="dropdown-item" href="ChercherEtudiants.php">Chercher Etudiant</a>
                     <a class="dropdown-item" href="ModifierListeEtudiants.php">Modifier Etudiant</a>
-                    <a class="dropdown-item" href="SupprimerListeEtudiants.php">Supprimer Etudiant</a>
+                    <a class="dropdown-item" href="#">Supprimer Etudiant</a>
 
 
                 </div>
@@ -110,97 +106,106 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
         </form>
     </div>
 </nav>
-
+      
 <main role="main">
-    <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-4">Afficher la liste d'étudiants par groupe</h1>
-            <p>Choisir une Classe  Valider puis Actualiser</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <form method="post" id="groupe" >
-            <div class="form-group">
-                <label for="classe">Choisir une classe:</label><br>
-                <!--
-                <input list="classe">
-                <datalist id="classe" name="classe">
-                    <option value="1-INFOA">1-INFOA</option>
-                    <option value="1-INFOB">1-INFOB</option>
-                    <option value="1-INFOC">1-INFOC</option>
-                    <option value="1-INFOD">1-INFOD</option>
-                    <option value="1-INFOE">1-INFOE</option>
-                </datalist>
-                -->
-                <select  id="classe" name="classe"  class="custom-select custom-select-sm custom-select-lg" onchange="submit()">
-                    <option value="">----  ----</option>
-                    <?php foreach($outputs["groupes"] as $tab): ?>
-                        <option value="<?=$tab['nom']?>"><?=$tab['nom']?></option>
-                    <?php endforeach ?>
-                    <!-- <option value="INFO1-A">INFO1-A</option>
-                    <option value="INFO1-B">INFO1-B</option>
-                    <option value="INFO1-C">INFO1-C</option>
-                    <option value="INFO1-D">INFO1-D</option>
-                    <option value="INFO1-E">INFO1-E</option>
-                    <option value="INFO2-A">INFO2-A</option>
-                    <option value="INFO2-B">INFO2-B</option>
-                    <option value="INFO2-C">INFO2-C</option>
-                    <option value="INFO2-D">INFO2-D</option>
-                    <option value="INFO2-E">INFO2-E</option>
-                    <option value="INFO3-A">INFO3-A</option>
-                    <option value="INFO3-B">INFO3-B</option>
-                    <option value="INFO3-C">INFO3-C</option>
-                    <option value="INFO3-D">INFO3-D</option> -->
-                </select>
-                <!-- <button class="btn btn-lg btn-primary btn-block" name="valider" type="submit">Valider</button> -->
+        <div class="jumbotron">
+            <div class="container">
+              <h1 class="display-4">Afficher la liste d'étudiants par groupe</h1>
+              <p>Cliquer sur la liste afin de choisir une classe!</p>
             </div>
-        </form>
-        <!--<input type="submit" name="valider" />-->
-        <div class="row">
-            <div class="table-responsive" id="demo">Liste vide </div>
-            <button  type="boutton" class="btn btn-primary btn-block active"  onclick="refresh()">Actualiser</button>
-        </div>
-    </div>
+          </div>
+
+<div class="container">
+
+
+<form id="myform" method="POST">
+<div class="form-group">
+<!--<label for="classe">Choisir une classe:</label><br>
+
+<input list="classe">
+<datalist id="classe" name="classe">
+    <option value="1-INFOA">1-INFOA</option>
+    <option value="1-INFOB">1-INFOB</option>
+    <option value="1-INFOC">1-INFOC</option>
+    <option value="1-INFOD">1-INFOD</option>
+    <option value="1-INFOE">1-INFOE</option>
+</datalist>
+-->
+<select id="classe" name="classe"  class="custom-select custom-select-sm custom-select-lg" onchange="foo();/*get_classe();*/" >
+            <option value="classe">Choisir un classe</option> 
+            <?php foreach($outputs["groupes"] as $tab): ?>
+                <option value="<?=$tab['nom']?>"><?=$tab['nom']?></option> 
+            <?php endforeach ?>
+</select>
+</div>
+</form>
+
+
+</div>  
+<div id="demo" style="text-align:center; color:red;"></div>
 </main>
 
+<footer class="container">
+    <p>&copy; ENICAR 2021-2022</p>
+  </footer>
 <script>
-    function submit(){
-        document.getElementById("groupe").submit();
-    }
-    function refresh() {
+    
+    function foo() {
+        var classe = document.getElementById("classe").value;
         var xmlhttp = new XMLHttpRequest();
-        var url = "http://localhost/Projet/afficherPar.php";
+        var url = "http://localhost/projetweb1/afficherParClasse.php";
 
         //Envoie de la requete
-        xmlhttp.open("GET",url,true);
-        xmlhttp.send();
+        xmlhttp.open("POST",url,true);
+        const form=document.getElementById("myform");
+        // alert("after");
+        const formdata=new FormData(form);
 
+        xmlhttp.send(formdata);
 
+        
         //Traiter la reponse
         xmlhttp.onreadystatechange=function()
         {  // alert(this.readyState+" "+this.status);
             if(this.readyState==4 && this.status==200){
-
+                console.log(this.responseText);
                 myFunction(this.responseText);
-                //alert(this.responseText);
+                
                 console.log(this.responseText);
                 //console.log(this.responseText);
             }
         }
-
+        
 
         //Parse la reponse JSON
         function myFunction(response){
+            
             var obj=JSON.parse(response);
             //alert(obj.success);
-
+            
             if (obj.success==1)
-            {
-                var arr=obj.etudiants;
+            {      
                 var i;
-                var out="<table  border=1 class='table table-striped table-hover'> <tr><th>CIN</th><th>Nom</th><th>Prénom</th><th>Adresse</th><th>Email</th><th>Classe</th></tr>";
+                /*
+                var outg = "<option value='choisir'>Choisir classe</option>"
+                
+                for ( i = 0; i < arrg.length; i++) {
+                    if(arrg[i]){
+                    outg+="<option value="+$arrg[i]+"> "+$arrg[i]+"</option>";
+                    }
+                }
+                
+                document.getElementById("classe").innerHTML="<option value='choisir'>Choisir classe</option>";
+                */
+                var arr=obj.etudiants;
+                
+
+
+                var out="<div class='container'>"+"<div class='row'>"+"<div class='table-responsive'>"+"  <table class='table table-striped table-hover'>";
+
+                  out+= "  <tr><th>CIN </th> <th>Nom </th> <th>Prénom</th> <th>Email </th> <th>Classe </th> </tr>"
                 for ( i = 0; i < arr.length; i++) {
+                    if(arr[i]){
                     out+="<tr><td>"+
                         arr[i].cin +
                         "</td><td>"+
@@ -208,24 +213,27 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
                         "</td><td>"+
                         arr[i].prenom+
                         "</td><td>"+
-                        arr[i].adresse+
-                        "</td><td>"+
                         arr[i].email+
                         "</td><td>"+
                         arr[i].classe+
                         "</td></tr>" ;
+                    }
                 }
-                out +="</table>";
+                out +="</table></div></div></div>";
                 document.getElementById("demo").innerHTML=out;
+                
+                
+                
+                
+
+                
             }
-            else document.getElementById("demo").innerHTML="AUCUN ETUDIANT DE CETTE CLASSE";
+            else document.getElementById("demo").innerHTML="Aucune Inscriptions pour ce classe!";
 
         }
     }
-</script>
 
-<footer class="container">
-    <p>&copy; ENICAR 2021-2022</p>
-</footer>
+
+</script>
 </body>
 </html>
