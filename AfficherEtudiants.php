@@ -24,6 +24,7 @@
     <title>SCO-ENICAR Afficher Etudiants</title>
     <!-- Bootstrap core CSS -->
     <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Bootstrap core JS-JQUERY -->
     <script src="./assets/dist/js/jquery.min.js"></script>
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
@@ -60,7 +61,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Etudiants</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
-                    <a class="dropdown-item" href="#">Chercher Etudiant</a>
+                    <a class="dropdown-item" href="ChercherEtudiants.php">Chercher Etudiant</a>
                     <a class="dropdown-item" href="ModifierListeEtudiants.php">Modifier Etudiant</a>
                     <a class="dropdown-item" href="#">Supprimer Etudiant</a>
 
@@ -106,6 +107,14 @@
                 </table>
                 <br>
             </div>
+        </div>
+        <div class="row">
+                <!--pagination-->
+                <nav style="margin: auto;margin-bottom:50px;" aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                </nav>
+        </div>
+        <div class="row">
             <button  type="button" class="btn btn-primary btn-block active" onclick="refresh()">Actualiser</button>
         </div>
     </div>
@@ -145,14 +154,29 @@
             //alert(obj.success);
 
             if (obj.success==1)
-            {
+            {   
+                
                 var arr=obj.etudiants;
                 var i;
+
+                // Pagination
+                    var perPage = 5;
+                    var total_pages = Math.ceil(arr.length / perPage);
+
+                    // Current page
+                    const queryString = window.location.search;
+                    const urlParams = new URLSearchParams(queryString);
+                    const pagee = urlParams.get('page') ? urlParams.get('page') : 1;
+                    var page = parseInt(pagee, 10);
+                    console.log(page);
+
+                    var starting_limit = (page - 1) * perPage;
 
                 var out="<div class='container'>"+"<div class='row'>"+"<div class='table-responsive'>"+"  <table class='table table-striped table-hover'>";
 
                   out+= "  <tr><th>CIN </th> <th>Nom </th> <th>Prénom</th> <th>Email </th> <th>Classe </th> </tr>"
-                for ( i = 0; i < arr.length; i++) {
+                for ( i = starting_limit; i < (starting_limit+perPage); i++) {
+                    if(arr[i]){
                     out+="<tr><td>"+
                         arr[i].cin +
                         "</td><td>"+
@@ -164,9 +188,16 @@
                         "</td><td>"+
                         arr[i].classe+
                         "</td></tr>" ;
+                    }
                 }
                 out +="</table></div></div></div>";
                 document.getElementById("demo").innerHTML=out;
+
+                var pag = "";
+                for(i = 1; i<=total_pages; i++){
+                    pag += `<a href="AfficherEtudiants.php?page=${i}"><li class="page-link">${i}</li></a>`;
+                }
+                document.getElementById("pagination").innerHTML=pag;
             }
             else document.getElementById("demo").innerHTML="Aucune Inscriptions!";
 
