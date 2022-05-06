@@ -52,11 +52,9 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
     </style>
 
 </head>
-<<<<<<< HEAD
+
 <body onload="refresh()">
-=======
-<body>
->>>>>>> b5690d384b9ee44431b856e0594786d6a1df9716
+
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#">SCO-Enicar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,22 +68,13 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
             </li>
 
             <li class="nav-item dropdown">
-<<<<<<< HEAD
-                <a class="nav-link dropdown-toggle" href="index.php" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>              <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="nav-link dropdown-toggle" href="index.php" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="afficherEtudiants.php">Lister tous les étudiants</a>
                     <a class="dropdown-item" href="afficherEtudiantsParClasse.php">Etudiants par Groupe</a>
                     <a class="dropdown-item" href="AjouterGroupe.php">Ajouter Groupe</a>
                     <a class="dropdown-item" href="ModifierGroupe.php">Modifier Groupe</a>
                     <a class="dropdown-item" href="SupprimerGroupe.php">Supprimer Groupe</a>
-=======
-                <a class="nav-link dropdown-toggle" href="index.php" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Groupes</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="afficherEtudiants.php">Lister tous les étudiants</a>
-                    <a class="dropdown-item" href="afficherEtudiantsParClasse.php">Etudiants par Groupe</a>
-                    <a class="dropdown-item" href="#">Ajouter Groupe</a>
-                    <a class="dropdown-item" href="#">Modifier Groupe</a>
-                    <a class="dropdown-item" href="#">Supprimer Groupe</a>
->>>>>>> b5690d384b9ee44431b856e0594786d6a1df9716
 
                 </div>
             </li>
@@ -93,15 +82,9 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-expanded="false">Gestion des Etudiants</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
-<<<<<<< HEAD
-                    <a class="dropdown-item" href="ChercherEtudiant.php">Chercher Etudiant</a>
-                    <a class="dropdown-item" href="ModifierEtudiant.php">Modifier Etudiant</a>
-                    <a class="dropdown-item" href="SupprimerEtudiant.php">Supprimer Etudiant</a>
-=======
                     <a class="dropdown-item" href="ChercherEtudiants.php">Chercher Etudiant</a>
                     <a class="dropdown-item" href="ModifierListeEtudiants.php">Modifier Etudiant</a>
-                    <a class="dropdown-item" href="#">Supprimer Etudiant</a>
->>>>>>> b5690d384b9ee44431b856e0594786d6a1df9716
+                    <a class="dropdown-item" href="SupprimerListeEtudiants.php">Supprimer Etudiant</a>
 
 
                 </div>
@@ -122,20 +105,12 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
 
 
         <form class="form-inline my-2 my-lg-0">
-<<<<<<< HEAD
-            <input class="form-control mr-sm-2" id="input" type="text" placeholder="Saisir un groupe" aria-label="Chercher un groupe">
-=======
             <input class="form-control mr-sm-2" type="text" placeholder="Saisir un groupe" aria-label="Chercher un groupe">
->>>>>>> b5690d384b9ee44431b856e0594786d6a1df9716
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Chercher Groupe</button>
         </form>
     </div>
 </nav>
-<<<<<<< HEAD
 
-=======
-      
->>>>>>> b5690d384b9ee44431b856e0594786d6a1df9716
 <main role="main">
     <div class="jumbotron">
         <div class="container">

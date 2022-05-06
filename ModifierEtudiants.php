@@ -49,9 +49,9 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="afficherEtudiants.php">Lister tous les étudiants</a>
                     <a class="dropdown-item" href="afficherEtudiantsParClasse.php">Etudiants par Groupe</a>
-                    <a class="dropdown-item" href="#">Ajouter Groupe</a>
-                    <a class="dropdown-item" href="#">Modifier Groupe</a>
-                    <a class="dropdown-item" href="#">Supprimer Groupe</a>
+                    <a class="dropdown-item" href="AjouterGroupe.php">Ajouter Groupe</a>
+                    <a class="dropdown-item" href="ModifierGroupe.php">Modifier Groupe</a>
+                    <a class="dropdown-item" href="SupprimerGroupe.php">Supprimer Groupe</a>
 
                 </div>
             </li>
@@ -61,7 +61,7 @@
                     <a class="dropdown-item" href="ajouterEtudiant.php">Ajouter Etudiant</a>
                     <a class="dropdown-item" href="ChercherEtudiants.php">Chercher Etudiant</a>
                     <a class="dropdown-item" href="ModifierListeEtudiants.php">Modifier Etudiant</a>
-                    <a class="dropdown-item" href="#">Supprimer Etudiant</a>
+                    <a class="dropdown-item" href="SupprimerListeEtudiants.php">Supprimer Etudiant</a>
 
 
                 </div>

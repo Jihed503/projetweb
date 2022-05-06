@@ -30,7 +30,8 @@ include("connexion.php");
             $reponse = $pdo->exec($req) or die("error");
             $erreur ="OK";
             $_SESSION["ajout"]="ok";
-            header("location:afficherEtudiants.php");
+            //header("location:afficherEtudiants.php");
+            header("location:ajouterEtudiant.php");
          }  
          echo $erreur;
 }
