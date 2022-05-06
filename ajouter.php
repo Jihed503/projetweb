@@ -20,13 +20,17 @@ include("connexion.php");
          $sel=$pdo->prepare("select cin from etudiant where cin=? limit 1");
          $sel->execute(array($cin));
          $tab=$sel->fetchAll();
-         if(count($tab)>0)
+         if(count($tab)>0){
             $erreur="NOT OK";// Etudiant existe déja
+            $_SESSION["ajout"]="not ok";
+            header("location:ajouterEtudiant.php");
+         }
          else{
-            $req="insert into etudiant values ($cin,'$email',md5('$pwd'),'$nom','$prenom','$adresse','$classe')";
+            $req="insert into etudiant values ($cin,'$email',md5('$pwd'),md5('$cpwd'),'$nom','$prenom','$adresse','$classe')";
             $reponse = $pdo->exec($req) or die("error");
-            //header("location:AfficherEtudiants.php");
             $erreur ="OK";
+            $_SESSION["ajout"]="ok";
+            header("location:afficherEtudiants.php");
          }  
          echo $erreur;
 }
