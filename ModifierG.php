@@ -6,26 +6,15 @@
  }
 else {
 $groupe=$_REQUEST['classe'];
-
+$nom=$_REQUEST['nom'];
 
 include("connexion.php");
-         $sel=$pdo->prepare("select * from groupe where nom=? limit 1");
-         $sel->execute(array($groupe));
-         $tab=$sel->fetchAll();
-         if(count($tab)==0){
-           // Aucun groupe
-            $_SESSION["modG"]="not ok";
-            header("location:SupprimerGroupe.php");
-         }
-         else{
-            $sel=$pdo->prepare("UPDATE groupe SET nom=? where nom=?");
-            $sel->execute(array($groupe));
-            $sel=$pdo->prepare("UPDATE groupe SET classe=? WHERE classe=?");
-            $sel->execute(array($groupe));
-            //$erreur ="OK";
-            $_SESSION["modG"]="ok";
-            header("location:SupprimerGroupe.php");
-         }  
-         echo $erreur;
+$req="update groupe set nom = '$nom' where nom = '$groupe'";
+$reponse = $pdo->exec($req) or die("error");
+
+$req2 = "update etudiant set Classe='$nom' where Classe='$groupe'";
+$reponse2 = $pdo->exec($req2) or die("error");
+
+header("location:ModifierGroupe.php");
 }
 ?>

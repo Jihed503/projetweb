@@ -18,6 +18,17 @@ include("connexion.php");
             header("location:SupprimerGroupe.php");
          }
          else{
+            //recuperer l'id de ce groupe
+            $idg=0;
+            $req="select id FROM groupe where nom='$groupe'";
+            $reponse = $pdo->query($req);
+            if($reponse->rowCount()>0) {
+               while ($row = $reponse ->fetch(PDO::FETCH_ASSOC)) {
+                  $idg = $row["id"];
+               }
+            }
+            $sel=$pdo->prepare("delete from ens_grp where idGroupe=?");
+            $sel->execute(array($idg));
             $sel=$pdo->prepare("delete from groupe where nom=?");
             $sel->execute(array($groupe));
             $sel=$pdo->prepare("delete from etudiant  where classe=?");

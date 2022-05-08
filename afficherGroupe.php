@@ -1,19 +1,50 @@
 <?php
-   session_start();
-   if($_SESSION["autoriser"]!="oui"){
-      header("location:login.php");
-      exit();
-   }
-   if(date("H")<18)
-      $bienvenue="Bonjour et bienvenue ".
-      $_SESSION["prenomNom"].
-      " dans votre espace personnel";
-   else
-      $bienvenue="Bonsoir et bienvenue ".
-      $_SESSION["prenomNom"].
-      " dans votre espace personnel";
-?>
+ session_start();
+ if($_SESSION["autoriser"]!="oui"){
+	header("location:login.php");
+	exit();
+ }
+else {
+include("connexion.php");
 
+/// liste des étudiants
+$groupe = $_GET["groupe"];
+$req="select * from etudiant where Classe='$groupe'";//$starting_limit,$perPage";
+$reponse = $pdo->query($req);
+$outputs["etudiants"]=array();
+if($reponse->rowCount()>0) {
+	
+    while ($row = $reponse ->fetch(PDO::FETCH_ASSOC)) {
+        $etudiant = array();
+        $etudiant["cin"] = $row["cin"];
+        $etudiant["nom"] = $row["nom"];
+        $etudiant["prenom"] = $row["prenom"];
+        $etudiant["adresse"] = $row["adresse"];
+        $etudiant["email"] = $row["email"];
+        $etudiant["classe"] = $row["Classe"];
+         array_push($outputs["etudiants"], $etudiant);
+    }
+
+} 
+$outputs["groupe"] = $groupe;
+
+/// liste des enseignants
+$req2="select * from groupe as g join ens_grp as eg  join enseignant as e
+            on eg.idEnseignant=e.id and eg.idGroupe=g.id
+            where g.nom='$groupe'";//$starting_limit,$perPage";
+$reponse2 = $pdo->query($req2);
+$outputs["enseignants"]=array();
+if($reponse2->rowCount()>0) {
+	
+    while ($row2 = $reponse2 ->fetch(PDO::FETCH_ASSOC)) {
+         array_push($outputs["enseignants"], $row2);
+    }
+}
+
+
+
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,18 +55,19 @@
     <title>SCO-ENICAR Afficher Etudiants</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <!-- Bootstrap core JS-JQUERY -->
     <script src="./assets/dist/js/jquery.min.js"></script>
     <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Custom styles for this template -->
     <link href="./assets/dist/css/jumbotron.css" rel="stylesheet">
 
 </head>
-<body id="myPage" onload="refresh()">
+<body id="myPage">
 <!-- Navbar -->
 <div class="w3-top">
  <div class="w3-bar w3-theme-d2 w3-left-align">
@@ -116,7 +148,7 @@
 <main role="main">
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-4">Liste des étudiants à modifier</h1>
+            <h1 class="display-4">Liste des étudiants <?php echo $outputs['groupe'];?></h1>
             <p>Cliquer sur le bouton afin d'actualiser la liste!</p>
         </div>
     </div>
@@ -125,21 +157,60 @@
         <div class="row">
             <div class="table-responsive">
                 <table class="table table-striped table-hover">
-                    <p id="demo">Liste vide</p>
+                    <?php if(!$outputs["etudiants"])
+                        echo "<p id='demo'><span style='color:red'>Liste vide</span></p>";
+                    else{ 
+                    echo "<div class='container'>
+                        <div class='row'>
+                            <div class='table-responsive'>
+                                <table class='table table-striped table-hover'>
+                                    <tr><th>CIN </th> <th>Nom </th> <th>Prénom</th> <th>Email </th> <th>Classe </th> </tr>";
+                                        
+                                            foreach ($outputs["etudiants"] as $etd) {
+                                                if($etd){
+                                                    echo "<tr><td>".
+                                                    $etd['cin']. 
+                                                    "</td><td>".
+                                                    $etd['nom'].
+                                                    "</td><td>".
+                                                    $etd['prenom'].
+                                                    "</td><td>".
+                                                    $etd['email'].
+                                                    "</td><td>".
+                                                    $etd['classe'].
+                                                    "</td></tr>";
+                                                }
+                                            }
+                                echo "</table>
+                            </div>
+                        </div>
+                    </div>";
+                    } ?>
 
                 </table>
                 <br>
             </div>
-            </div>
-        <div class="row">
-                <!--pagination-->
-                <nav style="margin: auto;margin-bottom:50px;" aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center" id="pagination"></ul>
-                </nav>
         </div>
-        <div class="row">
-            <button  type="button" class="btn btn-primary btn-block active" onclick="refresh()">Actualiser</button>
-        </div>
+        <!-- Enseignants-->
+<div style='margin-botton:1000px;' class="w3-container w3-padding-64 w3-center" id="enseignants">
+<h2>Enseignants</h2>
+
+<div class="w3-row"><br>
+        <?php 
+          if($outputs["enseignants"]){
+            foreach($outputs["enseignants"] as $ens){ 
+              echo "<div class='w3-quarter'>
+              <img src='".$ens['image']."' alt='enseignant' style='width:45%' class='w3-circle w3-hover-opacity'>
+                      <h3>".$ens['nom']." ".$ens['prenom']."</h3></div>";
+            }
+          }
+          else{
+           echo "
+             <h6>Il n'y a pas encore d'enseignants!</h6>
+           ";
+          }
+        ?>
+</div>
     </div>
 
 </main>
@@ -160,86 +231,6 @@
   </div>
 </footer>
 <script>
-    function refresh() {
-        var xmlhttp = new XMLHttpRequest();
-        var url = "http://localhost/projetweb/modifierListe.php";
-
-        //Envoie de la requete
-        xmlhttp.open("GET",url,true);
-        xmlhttp.send();
-
-
-        //Traiter la reponse
-        xmlhttp.onreadystatechange=function()
-        {  // alert(this.readyState+" "+this.status);
-            if(this.readyState==4 && this.status==200){
-
-                myFunction(this.responseText);
-
-                console.log(this.responseText);
-                //console.log(this.responseText);
-            }
-        }
-
-
-        //Parse la reponse JSON
-        function myFunction(response){
-            var obj=JSON.parse(response);
-            //alert(obj.success);
-
-            if (obj.success==1)
-            {
-                var arr=obj.etudiants;
-                var i;
-
-                // Pagination
-                    var perPage = 5;
-                    var total_pages = Math.ceil(arr.length / perPage);
-
-                    // Current page
-                    const queryString = window.location.search;
-                    const urlParams = new URLSearchParams(queryString);
-                    const pagee = urlParams.get('page') ? urlParams.get('page') : 1;
-                    var page = parseInt(pagee, 10);
-                    console.log(page);
-
-                    var starting_limit = (page - 1) * perPage;
-
-
-                var out="<div class='container'>"+"<div class='row'>"+"<div class='table-responsive'>"+"  <table class='table table-striped table-hover'>";
-
-                out+= "  <tr><th>CIN </th> <th>Nom </th> <th>Prénom</th> <th>Email </th> <th>Classe </th><th>Action </th> </tr>"
-                  for ( i = starting_limit; i < (starting_limit+perPage); i++) {
-                    if(arr[i]){
-                        out+="<tr><td>"+
-                            arr[i].cin +
-                            "</td><td>"+
-                            arr[i].nom+
-                            "</td><td>"+
-                            arr[i].prenom+
-                            "</td><td>"+
-                            arr[i].email+
-                            "</td><td>"+
-                            arr[i].classe+
-                            "</td><td>"+
-                            `<a href="ModifierEtudiants.php?cin=${arr[i].cin}"><button class="btn btn-warning" ><i class="fas fa-edit"></i></button></a>`+
-                            "</td></tr>" ;
-                    }
-                }
-                out +="</table></div></div></div>";
-                document.getElementById("demo").innerHTML=out;
-
-                var pag = "";
-                for(i = 1; i<=total_pages; i++){
-                    pag += `<a href="ModifierListeEtudiants.php?page=${i}"><li class="page-link">${i}</li></a>`;
-                }
-                document.getElementById("pagination").innerHTML=pag;                
-            }
-            else document.getElementById("demo").innerHTML="Aucune Inscriptions!";
-
-        }
-    }
-
     // Used to toggle the menu on smaller screens when clicking on the menu button
 function openNav() {
   var x = document.getElementById("navDemo");
@@ -251,5 +242,4 @@ function openNav() {
 }
 </script>
 </body>
-<script src="./assets/dist/js/smooth_scroll.js"></script>
 </html>

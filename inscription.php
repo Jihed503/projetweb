@@ -39,6 +39,9 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.88.1">
     <title>SCO-ENICAR Inscription Enseignant</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Bootstrap core CSS -->
 <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -89,6 +92,16 @@
 
   <p class="mt-5 mb-3 text-muted">&copy; SOC-Enicar 2021-2022</p>
 </form>
-    
+<script>
+    // Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
   </body>
 </html>

@@ -12,6 +12,7 @@
       if(count($tab)>0){
          $_SESSION["prenomNom"]=ucfirst(strtolower($tab[0]["prenom"])).
          " ".strtoupper($tab[0]["nom"]);
+         $_SESSION["id"]=$tab[0]["id"];
          $_SESSION["autoriser"]="oui";
          header("location:index.php");
       }

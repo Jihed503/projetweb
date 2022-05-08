@@ -26,7 +26,8 @@ include("connexion.php");
             header("location:ajouterEtudiant.php");
          }
          else{
-            $req="insert into etudiant values ($cin,'$email',md5('$pwd'),md5('$cpwd'),'$nom','$prenom','$adresse','$classe')";
+            $req="insert into etudiant (cin, email, password, cpassword, nom, prenom, adresse, Classe) 
+               values ($cin,'$email',md5('$pwd'),md5('$cpwd'),'$nom','$prenom','$adresse','$classe')";
             $reponse = $pdo->exec($req) or die("error");
             $erreur ="OK";
             $_SESSION["ajout"]="ok";
