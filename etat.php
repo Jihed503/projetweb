@@ -1,45 +1,4 @@
 <?php
-/*
- session_start();
- if($_SESSION["autoriser"]!="oui"){
-	header("location:login.php");
-	exit();
- }
-else {
-
-    if(!empty($groupe)){
-        include("connexion.php");
-        $req="SELECT * FROM absence where groupe= ? and  date <=? order by nom ASC";
-        $reponse = $pdo->prepare($req);
-        $reponse->execute(array($groupe,$fin));
-        if($reponse->rowCount()>0) {
-            $outputs["etudiants"]=array();
-        while ($row = $reponse ->fetch(PDO::FETCH_ASSOC)) {
-                $etudiant = array();
-                $etudiant["cin"] = $row["cin"];
-                $etudiant["nom"] = $row["nom"];
-               // $etudiant["prenom"] = $row["prenom"];
-                $etudiant["justifie"] = $row["justifie"];
-                $etudiant["nonJustifie"] = $row["nonJustifie"];
-                $etudiant["date"] = $row["date"];
-                $etudiant["groupe"] = $row["groupe"];
-                array_push($outputs["etudiants"], $etudiant);
-            }
-            // success
-            $outputs["success"] = 1;
-            //$outputs["date"]=$_SESSION["date"];
-            //$outputs["matiere"]=$_SESSION["matiere"];
-            echo json_encode($outputs);
-        } else {
-            $outputs["success"] = 0;
-            $outputs["message"] = "Pas d'étudiants";
-            // echo no users JSON
-            echo json_encode($outputs);
-            
-            }
-    }
-}
-*/
 
  session_start();
  if($_SESSION["autoriser"]!="oui"){
@@ -76,8 +35,8 @@ while ($row = $reponse ->fetch(PDO::FETCH_ASSOC)) {
         $etudiant["nom"] = $row["nom"];
         $etudiant["prenom"] = $row["prenom"];
         $etudiant["justifie"] = $row["justifie"];
-        $etudiant["nonjustifie"] = $row["nonJustifie"];
-        $etudiant["total"] = $row["justifie"]+$row["nonJustifie"];
+        $etudiant["nonjustifie"] = $row["nonjustifie"];
+        $etudiant["total"] = $row["justifie"]+$row["nonjustifie"];
          array_push($outputs["etudiants"], $etudiant);
     }
 

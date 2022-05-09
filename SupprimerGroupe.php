@@ -13,7 +13,9 @@
         $_SESSION["suppG"]="";//pour mettre la valeur de $erreur="" (vide)
     //SPECIAL POUR SELECT OPTION
     include("connexion.php");
-    $req="SELECT * FROM groupe  order by nom ASC ";
+    $id = $_SESSION["id"];
+    $req="select distinct g.nom from groupe as g inner join ens_grp as eg 
+    on g.id=eg.idGroupe where eg.idEnseignant=$id";
     $reponse = $pdo->query($req);
     if($reponse->rowCount()>0) {
         $outputs["groupes"]=array();

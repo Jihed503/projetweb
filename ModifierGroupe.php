@@ -14,8 +14,10 @@
       " dans votre espace personnel";
 
     /// Groupes
+    $id = $_SESSION["id"];
     include("connexion.php");
-    $req="select * from groupe";
+    $req="select distinct g.nom from groupe as g inner join ens_grp as eg 
+    on g.id=eg.idGroupe where eg.idEnseignant=$id";
     $reponse = $pdo->query($req);
     $outputs["groupes"] = array();
     if($reponse->rowCount()>0) {
