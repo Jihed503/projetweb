@@ -29,7 +29,7 @@
         <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
 
             <!-- Custom styles for this template -->
-            <link href="./assets/jumbotron.css" rel="stylesheet">
+            <link href="./assets/dist/css/jumbotron.css" rel="stylesheet">
         <style>
           .erreur{
           color:red;

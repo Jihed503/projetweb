@@ -73,14 +73,16 @@
             array_push($outputs["mesgroupes"], $groupeANDcount);
         }
     }
-
+    
     /// Les autres enseignants
     $reqe="select * from enseignant where id!=$id";
     $reponsee = $pdo->query($reqe);
     $outputs["enseignants_groupes"]=array();
+
     if($reponsee->rowCount()>0) {
-      $ens_grp = array();
+      
       while ($rowe = $reponsee ->fetch(PDO::FETCH_ASSOC)) {
+        $ens_grp = array();
         $reqge="select distinct g.nom from groupe as g inner join ens_grp as eg 
             on g.id=eg.idGroupe where eg.idEnseignant=".$rowe['id'];
         $reponsege = $pdo->query($reqge);
@@ -93,19 +95,27 @@
         
         array_push($ens_grp, $rowe);
         array_push($ens_grp, $rowg);
+        array_push($outputs["enseignants_groupes"], $ens_grp);
       }
-      array_push($outputs["enseignants_groupes"], $ens_grp);
+      
+      
     }
 
 
     
 
-    
+
+
+
+
+
+
 
 
 
 
   }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -282,6 +292,7 @@
 
 <div class="w3-row"><br>
         <?php 
+        
           if($outputs["enseignants_groupes"]){
             foreach($outputs["enseignants_groupes"] as $tab){ 
               echo "<div class='w3-quarter'>
