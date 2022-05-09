@@ -1,10 +1,42 @@
+<?php
+session_start();
+@$classe=$_POST["classe"];
+@$aller=$_POST["valider"];
+if($_SESSION["autoriser"]!="oui"){
+    header("location:login.php");
+    exit();
+}
+else{
+  $id = $_SESSION['id'];
+    // select groupe
+    include("connexion.php");
+    $req="select * from groupe as g inner join ens_grp as eg 
+          on g.id=eg.idGroupe where eg.idEnseignant=$id order by g.nom ASC";
+    $reponse = $pdo->query($req);
+    if($reponse->rowCount()>0) {
+        $outputs["groupes"]=array();
+        while ($row = $reponse ->fetch(PDO::FETCH_ASSOC)) {
+            $etudiant = array();
+            $etudiant["nom"] = $row["nom"];
+            array_push($outputs["groupes"], $etudiant);
+        }
+        // success
+        $outputs["success"] = 1;
+    } else {
+        $outputs["success"] = 0;
+        $outputs["message"] = "Pas d'étudiants";}
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCO-ENICAR Etat Absence</title>
+    <title>SCO-ENICAR Etudiants Par CLasse</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,7 +47,7 @@
 <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom styles for this template -->
-    <link href="./assets/jumbotron.css" rel="stylesheet">
+    <link href="./assets/dist/css/jumbotron.css" rel="stylesheet">
 
 </head>
 <body id="myPage">
@@ -97,61 +129,38 @@
 
       
 <main role="main">
-        <div style="margin-top:65px;" class="jumbotron">
+        <div class="jumbotron">
             <div class="container">
-              <h1 class="display-4">État des absences pour un groupe</h1>
-              <p>Pour afficher l'état des absences, choisissez d'abord le groupe  et la periode concernée!</p>
+              <h1 class="display-4">Afficher la liste d'étudiants par groupe</h1>
+              <p>Cliquer sur la liste afin de choisir une classe!</p>
             </div>
           </div>
 
 <div class="container">
-<form>
-  <table><tr><td>Date de début (j/m/a) : </td><td>
-    <input type="date" name="debut" size="10" value="01/09/2021" class="datepicker"/>
-    </td></tr><tr><td>Date de fin : </td><td>
-    <input type="date" name="fin" size="10" value="12/03/2022" class="datepicker"/>
-    </td></tr></table>
 
+
+<form id="myform" method="POST">
 <div class="form-group">
-<label for="classe">Choisir une classe:</label><br>
-<!--
-<input list="classe">
-<datalist id="classe" name="classe">
-    <option value="1-INFOA">1-INFOA</option>
-    <option value="1-INFOB">1-INFOB</option>
-    <option value="1-INFOC">1-INFOC</option>
-    <option value="1-INFOD">1-INFOD</option>
-    <option value="1-INFOE">1-INFOE</option>
-</datalist>
--->
-<select id="classe" name="classe"  class="custom-select custom-select-sm custom-select-lg">
-    <option value="1-INFOA">1-INFOA</option>
-    <option value="1-INFOB">1-INFOB</option>
-    <option value="1-INFOC">1-INFOC</option>
-    <option value="1-INFOD">1-INFOD</option>
-    <option value="1-INFOE">1-INFOE</option>
+<table><tr><td>Date de début (j/m/a) : </td><td>
+                      <input type="date" name="debut" id="debut" size="10"  class="datepicker"  required/>
+                      </td></tr><tr><td>Date de fin : </td><td>
+                      <input type="date" name="fin"  id="fin" size="10"  class="datepicker" required/>
+                      </td></tr>
+                    </table>
+
+
+<select id="classe" name="classe"  class="custom-select custom-select-sm custom-select-lg" onchange="foo();/*get_classe();*/" >
+            <option value="classe">Choisir un classe</option> 
+            <?php foreach($outputs["groupes"] as $tab): ?>
+                <option value="<?=$tab['nom']?>"><?=$tab['nom']?></option> 
+            <?php endforeach ?>
 </select>
-
 </div>
-
-<div class="table-responsive"> 
-  <table class="table table-striped table-hover">
-  <thead>
-  <tr class="gt_firstrow " ><th >Nom</th><th>Justifiées</th><th >Non justifiées</th><th >Total</th></tr>
-  </thead>
-  <tbody>
-  <tr><td><b>M. SAAD WALID</b></td><td >0</td><td >0</td><td >0</td></tr>
-  <tr ><td><b>M. SAAD WALID</b></td><td >0</td><td >0</td><td >0</td></tr>
-
-  
-  </tbody>
-  <tfoot>
-  </tfoot>
-  </table>
-  </div>
-
 </form>
+
+
 </div>  
+<div id="demo" style="text-align:center; color:red;"></div>
 </main>
 
 <!-- Footer -->
@@ -168,9 +177,93 @@
     <i class="fa fa-chevron-circle-up"></i></span></a>
   </div>
 </footer>
+<script>
+    
+    function foo() {
+        var classe = document.getElementById("classe").value;
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://localhost/projetweb/etat.php";
 
-  <script>
-    // Used to toggle the menu on smaller screens when clicking on the menu button
+        //Envoie de la requete
+        xmlhttp.open("POST",url,true);
+        const form=document.getElementById("myform");
+        // alert("after");
+        const formdata=new FormData(form);
+
+        xmlhttp.send(formdata);
+
+        
+        //Traiter la reponse
+        xmlhttp.onreadystatechange=function()
+        {  // alert(this.readyState+" "+this.status);
+            if(this.readyState==4 && this.status==200){
+                console.log(this.responseText);
+                myFunction(this.responseText);
+                
+                console.log(this.responseText);
+                //console.log(this.responseText);
+            }
+        }
+        
+
+        //Parse la reponse JSON
+        function myFunction(response){
+            
+            var obj=JSON.parse(response);
+            //alert(obj.success);
+            
+            if (obj.success==1)
+            {      
+                var i;
+                /*
+                var outg = "<option value='choisir'>Choisir classe</option>"
+                
+                for ( i = 0; i < arrg.length; i++) {
+                    if(arrg[i]){
+                    outg+="<option value="+$arrg[i]+"> "+$arrg[i]+"</option>";
+                    }
+                }
+                
+                document.getElementById("classe").innerHTML="<option value='choisir'>Choisir classe</option>";
+                */
+                var arr=obj.etudiants;
+
+
+                var out="<div class='container'>"+"<div class='row'>"+"<div class='table-responsive'>"+"  <table class='table table-striped table-hover'>";
+
+                  out+= "  <tr><th>CIN </th> <th>Nom </th> <th>Prénom</th> <th>Absence justifiée </th> <th>Absence non justifiée </th> <th>Total </th> </tr>"
+                for ( i = 0; i < arr.length; i++) {
+                    if(arr[i]){
+                    out+="<tr><td>"+
+                        arr[i].cin +
+                        "</td><td>"+
+                        arr[i].nom+
+                        "</td><td>"+
+                        arr[i].prenom+
+                        "</td><td>"+
+                        arr[i].justifie+
+                        "</td><td>"+
+                        arr[i].nonjustifie+
+                        "</td><td>"+
+                        arr[i].total+
+                        "</td></tr>" ;
+                    }
+                }
+                out +="</table></div></div></div>";
+                document.getElementById("demo").innerHTML=out;
+                
+                
+                
+                
+
+                
+            }
+            else document.getElementById("demo").innerHTML="Aucune Inscriptions pour ce classe!";
+
+        }
+    }
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
 function openNav() {
   var x = document.getElementById("navDemo");
   if (x.className.indexOf("w3-show") == -1) {
@@ -180,6 +273,6 @@ function openNav() {
   }
 }
 </script>
-</body>
 <script src="./assets/dist/js/smooth_scroll.js"></script>
+</body>
 </html>

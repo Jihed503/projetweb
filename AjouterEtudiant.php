@@ -7,9 +7,9 @@
       exit();
    }
    else{
-    if($_SESSION["ajout"]=="not ok"){
+    if(@$_SESSION["ajout"]=="not ok"){
         $erreur="Ce compte existe déjà!";}
-    if ($_SESSION["ajout"]=="ok"){
+    if (@$_SESSION["ajout"]=="ok"){
         $erreur="Ajout avec Succes!";
     }
      $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)

@@ -246,7 +246,7 @@
 
 <!-- Image Header -->
 <div class="w3-display-container w3-animate-opacity">
-  <img src="https://www.w3schools.com/w3images/sailboat.jpg" alt="boat" style="width:100%;min-height:350px;max-height:700px;">
+  <img src="https://www.w3schools.com/w3images/sailboat.jpg" alt="boat" style="width:100%;min-height:350px;max-height:675px;">
   
   <div class="w3-display-middle">  
   <h1 class="linear_gradient"> <center><?php echo $bienvenue?></center></h1>

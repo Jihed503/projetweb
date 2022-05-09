@@ -5,12 +5,12 @@
        header("location:login.php");
        exit();
     }
-     if($_SESSION["ajout"]=="not ok"){
+     if(@$_SESSION["ajout"]=="not ok"){
          $erreur="Ce groupe existe déjà!";}
      if (@$_SESSION["ajout"]=="ok"){
          $erreur="Ajout  avec Succes!";
      }
-      $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
+      @$_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -7,11 +7,8 @@ if($_SESSION["autoriser"]!="oui"){
     exit();
 }
 else{
-    $tab=array( "INFO1","INFO2","INFO3");
-    $_SESSION["groupePar"]=$classe;
-    $_SESSION["soumettre"]=$aller;
-
-    //SPECIALE POUR OPTION DE SELECT
+  
+    // select groupe
     include("connexion.php");
     $req="SELECT * FROM groupe  order by nom ASC ";
     $reponse = $pdo->query($req);
@@ -27,9 +24,9 @@ else{
     } else {
         $outputs["success"] = 0;
         $outputs["message"] = "Pas d'étudiants";}
-    //SPECIALE POUR OPTION DE SELECT
+
 }
-$_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
+
 ?>
 
 
@@ -144,17 +141,7 @@ $_SESSION["ajout"]="";//pour mettre la valeur de $erreur="" (vide)
 
 <form id="myform" method="POST">
 <div class="form-group">
-<!--<label for="classe">Choisir une classe:</label><br>
 
-<input list="classe">
-<datalist id="classe" name="classe">
-    <option value="1-INFOA">1-INFOA</option>
-    <option value="1-INFOB">1-INFOB</option>
-    <option value="1-INFOC">1-INFOC</option>
-    <option value="1-INFOD">1-INFOD</option>
-    <option value="1-INFOE">1-INFOE</option>
-</datalist>
--->
 <select id="classe" name="classe"  class="custom-select custom-select-sm custom-select-lg" onchange="foo();/*get_classe();*/" >
             <option value="classe">Choisir un classe</option> 
             <?php foreach($outputs["groupes"] as $tab): ?>

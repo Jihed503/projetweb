@@ -195,7 +195,7 @@
                 var i;
 
                 // Pagination
-                    var perPage = 5;
+                    var perPage = 10;
                     var total_pages = Math.ceil(arr.length / perPage);
 
                     // Current page

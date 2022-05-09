@@ -1,66 +1,59 @@
 <?php
     session_start();
-    @$valider=$_POST["valider"];
-    @$semaine=$_POST["debut"];
-    @$classe=$_POST["classe"];
-    @$matiere=$_POST["module"];
     if($_SESSION["autoriser"]!="oui"){
       header("location:login.php");
       exit();
     }
     else{
-      $_SESSION["classeS"]=$classe;
-      $_SESSION["envoyer"]=$valider;
-      $_SESSION["semaine"]=$semaine;
-      $_SESSION["matiere"]=$matiere;
-      if(isset($valider)){
-        $date=date("d-m-Y",strtotime($semaine));//Recuperer la 1re date de la semaine
-        $_SESSION["date"]=$date;
-      $Date=date_create($date);}
-      //SPECIALE POUR OPTION DE SELECT
-      include("connexion.php");
-      $req="SELECT * FROM groupe  order by nom ASC ";
-      $reponse = $pdo->query($req);
-      if($reponse->rowCount()>0) {
-          $outputs["groupes"]=array();
-      while ($row = $reponse ->fetch(PDO::FETCH_ASSOC)) {
-              $etudiant = array();
-              $etudiant["nom"] = $row["nom"];
-              array_push($outputs["groupes"], $etudiant);
-          }
-          // success
-          $outputs["success"] = 1;
-      } else {
-          $outputs["success"] = 0;
-          $outputs["message"] = "Pas d'étudiants";}
-        //SPECIALE POUR OPTION DE SELECT
+    
+    // Select mes groupes
+    include("connexion.php");
+    $id = $_SESSION["id"];
+    $req="select distinct g.nom from groupe as g inner join ens_grp as eg 
+            on g.id=eg.idGroupe where eg.idEnseignant=$id";
+    $reponse = $pdo->query($req);
+    $outputs["mesgroupes"]=array();
+    if($reponse->rowCount()>0) {
+        while ($row = $reponse ->fetch(PDO::FETCH_ASSOC)) {
+            array_push($outputs["mesgroupes"], $row['nom']);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>SCO-ENICAR Saisir Absence</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCO-ENICAR Etudiants Par CLasse</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <!-- Bootstrap core CSS -->
-      <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
-          <!-- Bootstrap core JS-JQUERY -->
-      <script src="./assets/dist/js/jquery.min.js"></script>
-      <script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core CSS -->
+<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap core JS-JQUERY -->
+<script src="./assets/dist/js/jquery.min.js"></script>
+<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
 
-      <!-- Custom styles for this template -->
-      <link href="./assets/jumbotron.css" rel="stylesheet">
-      <style>
-        #input{width:170px;}
-      </style>
+    <!-- Custom styles for this template -->
+    <link href="./assets/dist/css/jumbotron.css" rel="stylesheet">
 
 </head>
-<body id="myPage" onload="refresh()">
-        <!-- Navbar -->
+<body id="myPage">
+<!-- Navbar -->
 <div class="w3-top">
  <div class="w3-bar w3-theme-d2 w3-left-align">
   <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-hover-white w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
@@ -136,215 +129,54 @@
 </div>
 <!---------------------------------------------------Navbar--------------------------------------------->
 
-          
-    <main role="main">
-            <div style="margin-top:65px;" class="jumbotron">
-                <div class="container">
-                  <h1 class="display-4">Signaler l'absence pour tout un groupe</h1>
-                  <p>Pour signaler, annuler ou justifier une absence, choisissez d'abord le groupe, le module puis l'étudiant concerné!</p>
-                </div>
-              </div>
+      
+<main role="main">
+        <div class="jumbotron">
+            <div class="container">
+              <h1 class="display-4">Signaler l'absence pour tout un groupe</h1>
+              <p>Pour signaler, annuler ou justifier une absence, choisissez d'abord le groupe, le module puis l'étudiant concerné!</p>
+            </div>
+          </div>
 
-    <div class="container">
-    <form method="post">
-        <div class="form-group">
-          <label for="semaine">Choisir une semaine:</label><br>
-          <input id="semaine" type="week" name="debut" size="10" class="datepicker" required/>
-          <h4><?php //echo ($date."<br>");echo $semaine;?></h4>
-        </div>
-          <div class="form-group">
-          <label for="classe">Choisir un groupe:</label><br>
-          <select id="classe" name="classe"  class="custom-select custom-select-sm custom-select-lg">
-          <?php foreach($outputs["groupes"] as $tab): ?>
-                <option value="<?=$tab['nom']?>"><?=$tab['nom']?></option> 
-            <?php endforeach ?>
-              <!-- <option value="INFO1-A">1-INFOA</option>
-              <option value="INFO1-B">1-INFOB</option>
-              <option value="INFO1-C">1-INFOC</option>
-              <option value="INFO1-D">1-INFOD</option>
-              <option value="INFO1-E">1-INFOE</option>
-              <option value="INFO2-A">2-INFOA</option>
-              <option value="INFO2-B">2-INFOB</option>
-              <option value="INFO2-C">2-INFOC</option>
-              <option value="INFO2-D">2-INFOD</option>
-              <option value="INFO2-E">2-INFOE</option>
-              <option value="INFO3-A">3-INFOA</option>
-              <option value="INFO3-B">3-INFOB</option>
-              <option value="INFO3-C">3-INFOC</option>
-              <option value="INFO3-D">3-INFOD</option> -->
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="module">Choisir un module:</label><br>
-          <select id="module" name="module"  class="custom-select custom-select-sm custom-select-lg">
-              <option value="Web">Web</option>
-              <option value="BD">BD</option>
-              <option value="C++">Programmation</option>
-              <option value="UML">UML</option>
-              <option value="Maths">Maths</option>
-              <option value="ANG">ANG</option>
-          </select>
-        </div>
-        <!--Bouton Valider-->
-        <button  type="submit" class="btn btn-primary btn-block" name="valider">OK</button>
-    </form>
-    <br>
-    <div class="row">
-        <div class="table-responsive" id="demo">Liste vide </div>
-        <h4><?php //print_r($Date);?></h4>
-          <button  type="boutton" class="btn btn-primary btn-block active"  onclick="refresh()">Actualiser</button>
-        </div>  
-    </div>
-    <!-- <form action="">
-        <table rules="cols" frame="box">
-            <tr><th>25 étudiants</th>
-            
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Lundi</th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Mardi</th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Mercredi</th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Jeudi</th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Vendredi</th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Samedi</th>
-              </tr><tr><td>&nbsp;</td>
-              <th colspan="2" width="100px"  style="padding-left: 5px; padding-right: 5px;"><?php echo date("d/m/Y",strtotime($date));?></th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(Date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(Date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(Date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>
-              <th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(Date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>
-              </tr><tr><td>&nbsp;</td>
-              <th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th>
-            </tr>
-          <tr class="row_3"><td><b>M. WALID SAAD</b></td>
-            <td><input type="checkbox">Abs <input type="checkbox">jus</td>
-            <td><input type="checkbox">Abs <input type="checkbox">jus</td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <?php // ?>
-          </tr>
+<div class="container">
+    <div id='demo2'></div>
+<form id="myform" method="POST" action="saisir.php">
+<div class="form-group">
+  <label for="semaine">Choisir une semaine:</label><br>
+  <input required id="semaine" type="week" name="debut" size="10" class="datepicker"/>
+</div>
+  <div class="form-group">
+<label for="classe">Choisir un groupe:</label><br>
 
-          <tr class="row_3"><td><b>M. TORIEN</b></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-          </tr>
-        </table>
-        <br>
-    </form> -->
-    <h4><?php echo ($date."<br>");echo $semaine;?></h4>
-    </div>  
-    </main>
- 
-
-<script>
-    function refresh() {
-        var xmlhttp = new XMLHttpRequest();
-        var url = "http://localhost/Projet/saisir.php";
-
-    //Envoie de la requete
-	xmlhttp.open("GET",url,true);
-	xmlhttp.send();
-
-
-     //Traiter la reponse
-     xmlhttp.onreadystatechange=function()
-            {  // alert(this.readyState+" "+this.status);
-                if(this.readyState==4 && this.status==200){
-                
-                    myFunction(this.responseText);
-                    //alert(this.responseText);
-                    console.log(this.responseText);
-                    //console.log(this.responseText);
-                }
-            }
-            
-
-
-    //Parse la reponse JSON
-	function myFunction(response){
-		var obj=JSON.parse(response);
-        //alert(obj.success);
-
-        if (obj.success==1)
-        {
-		var arr=obj.etudiants;
-		var i;
-    var sortie='<h6>Fiche d\'abscence </h6> <br>';
-        sortie+='<h5>Groupe: '+arr[0].classe+'\t'+'\t'+' Module: '+obj.matiere+'</h5> <br>';
-    sortie+='<form action=""><table name=\"tab\" rules="cols" frame="box"><tr><th> '+arr.length +' étudiants</th><th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Lundi</th><th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Mardi</th><th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Mercredi</th><th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Jeudi</th><th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Vendredi</th><th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;">Samedi</th></tr>';
-    sortie+='<tr><td>&nbsp;</td>';
-    sortie+='<th colspan="2" width="100px"  style="padding-left: 5px; padding-right: 5px;"><?php echo date("d/m/Y",strtotime($date));?></th>';
-    sortie+=   '<th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(date_sub($Date,date_interval_create_from_date_string("4 days")),"d/m/Y");?></th>';
-    sortie+=  '<th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(Date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>';
-    sortie+=  '<th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(Date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>';
-    sortie+=  '<th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(Date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>';
-    sortie+=  '<th colspan="2" width="100px" style="padding-left: 5px; padding-right: 5px;"><?php echo date_format(Date_add($Date,date_interval_create_from_date_string("1 days")),"d/m/Y");?></th>';
-    sortie+=  '</tr><tr><td>&nbsp;</td>';
-    sortie+=  '<th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th>';
-    sortie+='</tr>';
-    for ( i = 0; i < arr.length; i++) {
-      sortie+='<tr class="row_3"><td><b>'+
-      arr[i].cin+"   | "+
-      arr[i].nom +
-      " "+
-      arr[i].prenom+
-      '</b></td>'+
-      '<td><input type="checkbox"></td>'+
-      '<td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td></tr>';
+<!--Mes groupes-->
+<select id="classe" name="classe"  class="custom-select custom-select-sm custom-select-lg" onchange="foo();">
+    <option>Choisir un groupe...</option>
+    <?php foreach($outputs['mesgroupes'] as $groupe){
+        echo "<option value=".$groupe.">".$groupe."</option>";
     }
-    var out="<table  border=1 class='table table-striped table-hover'> <tr><th>CIN</th><th>Nom</th><th>Prénom</th><th>Adresse</th><th>Email</th><th>Classe</th></tr>";
-		for ( i = 0; i < arr.length; i++) {
-			out+="<tr><td>"+
-			arr[i].cin +
-			"</td><td>"+
-			arr[i].nom+
-			"</td><td>"+
-			arr[i].prenom+
-			"</td><td>"+
-			arr[i].adresse+
-			"</td><td>"+
-			arr[i].email+
-            "</td><td>"+
-			arr[i].classe+
-			"</td></tr>" ;
-		}
-    sortie+="</table></form>";
-		out +="</table>";
-		document.getElementById("demo").innerHTML=sortie;
-       }
-       else document.getElementById("demo").innerHTML="AUCUN ETUDIANT DE CETTE CLASSE";
+    ?>
+</select>
+</div>
 
-    }
- }
+<!--Modules-->
+<div class="form-group">
+  <label for="module">Choisir un module:</label><br>
+  <select id="module" name="module"  class="custom-select custom-select-sm custom-select-lg">
+      <option value="Tech. Web">Tech. Web</option>
+      <option value="SGBD">SGBD</option>
+  </select>
+  </div>
 
-    // Used to toggle the menu on smaller screens when clicking on the menu button
-function openNav() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-</script>
+<!--Table d'absence-->
+<div id="demo" style="text-align:center; color:red;"></div>
 
+ <!--Bouton Valider-->
+ <button  type="submit" class="btn btn-primary btn-block">Valider</button>
+</form>
+</div>  
+
+
+</main>
 <!-- Footer -->
 <footer style='margin-top:200px;' class="w3-container w3-padding-32 w3-theme-d1 w3-center">
   <h4>Réseaux sociaux</h4>
@@ -359,6 +191,151 @@ function openNav() {
     <i class="fa fa-chevron-circle-up"></i></span></a>
   </div>
 </footer>
+<script>
+    function foo() {
+        var classe = document.getElementById("classe").value;
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://localhost/projetweb/afficherPar.php";
+
+        //Envoie de la requete
+        xmlhttp.open("POST",url,true);
+        const form=document.getElementById("myform");
+        // alert("after");
+        const formdata=new FormData(form);
+
+        xmlhttp.send(formdata);
+
+        
+        //Traiter la reponse
+        xmlhttp.onreadystatechange=function()
+        {  // alert(this.readyState+" "+this.status);
+            if(this.readyState==4 && this.status==200){
+                console.log(this.responseText);
+                myFunction(this.responseText);
+                
+                console.log(this.responseText);
+                //console.log(this.responseText);
+            }
+        }
+        
+
+        //Parse la reponse JSON
+        function myFunction(response){
+            
+            var obj=JSON.parse(response);
+            //alert(obj.success);
+            
+            if (obj.success==1)
+            {      
+                var i;
+                /*
+                var outg = "<option value='choisir'>Choisir classe</option>"
+                
+                for ( i = 0; i < arrg.length; i++) {
+                    if(arrg[i]){
+                    outg+="<option value="+$arrg[i]+"> "+$arrg[i]+"</option>";
+                    }
+                }
+                
+                document.getElementById("classe").innerHTML="<option value='choisir'>Choisir classe</option>";
+                */
+                var arr=obj.etudiants;
+                
+                //document.getElementById("demo").innerHTML=out;
+                
+                // Parse Dates
+                let parseDates = (inp) => {
+                    let year = parseInt(inp.slice(0,4), 10);
+                    let week = parseInt(inp.slice(6), 10);
+
+                    let day = (1 + (week - 1) * 7); // 1st of January + 7 days for each week
+
+                    let dayOffset = new Date(year, 0, 1).getDay(); // we need to know at what day of the week the year start
+
+                    dayOffset--;  // depending on what day you want the week to start increment or decrement this value. This should make the week start on a monday
+
+                    let days = [];
+                    for (let i = 0; i < 7; i++) // do this 7 times, once for every day
+                        days.push(new Date(year, 0, day - dayOffset + i)); // add a new Date object to the array with an offset of i days relative to the first day of the week
+                    return days;
+                }
+                let week = document.getElementById("semaine");
+                let dates = parseDates(week.value);
+                //alert(dates[0].getFullYear());
+                //alert(dates[0].getDate()+7);
+                //alert(dates[0].getUTCMonth()+2);
+
+                // Table d'absence
+                var ta="<div class='container'><div class='row'><div class='table-responsive'><table  class='table table-striped table-hover' rules='cols' frame='box'><tr><th>25 étudiants</th>"
+                    +"<th colspan='2' width='100px' style='padding-left: 5px; padding-right: 5px;'>Lundi</th>"
+                    +"<th colspan='2' width='100px' style='padding-left: 5px; padding-right: 5px;'>Mardi</th>"
+                    +"<th colspan='2' width='100px' style='padding-left: 5px; padding-right: 5px;'>Mercredi</th>"
+                    +"<th colspan='2' width='100px' style='padding-left: 5px; padding-right: 5px;'>Jeudi</th>"
+                    +"<th colspan='2' width='100px' style='padding-left: 5px; padding-right: 5px;'>Vendredi</th>"
+                    +"<th colspan='2' width='100px' style='padding-left: 5px; padding-right: 5px;'>Samedi</th>"
+                    +"</tr><tr><td>&nbsp;</td>";
+                    for ( i = 0; i < (dates.length-1); i++) {
+                        ta+="<th colspan='2' width='100px' style='padding-left: 5px; padding-right: 5px;'>"+(dates[i].getDate())+"/"+(dates[i].getUTCMonth()+1)+"/"+dates[i].getFullYear()+"</th>";
+                    }
+                    
+                    ta+="</tr><tr><td>&nbsp;</td>"
+                    +"<th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th><th>AM</th><th>PM</th>"
+                    +"</tr>";
+                
+                    for ( i = 0; i < arr.length; i++) {
+                        if(arr[i]){
+                            ta+="<tr class='row_3'><td><b>"+arr[i].nom+" "+arr[i].prenom+"</b></td>";
+                            for(var j=0; j<(dates.length-1); j++){
+                                /* am justifiée*/    ta+="<td><input name='check[]' type='checkbox' value='"+(dates[j].getDate())+"/"+(dates[j].getUTCMonth()+1)+"/"+dates[j].getFullYear()+"_AM_j_"+arr[i].cin+"_"+arr[i].nom+"_"+arr[i].prenom+"'>"
+                                /* am non justifiée*/   +"<input name='check[]' style='filter: invert(100%) hue-rotate(18deg) brightness(1.7);' type='checkbox'  value='"+(dates[j].getDate())+"/"+(dates[j].getUTCMonth()+1)+"/"+dates[j].getFullYear()+"_AM_nj_"+arr[i].cin+"_"+arr[i].nom+"_"+arr[i].prenom+"'></td>"
+                                /* pm justifiée*/      +"<td><input name='check[]' type='checkbox'  value='"+(dates[j].getDate())+"/"+(dates[j].getUTCMonth()+1)+"/"+dates[j].getFullYear()+"_PM_j_"+arr[i].cin+"_"+arr[i].nom+"_"+arr[i].prenom+"'>"
+                                /* pm non justifiée*/   +"<input name='check[]' style='filter: invert(100%) hue-rotate(18deg) brightness(1.7);' type='checkbox'  value='"+(dates[j].getDate())+"/"+(dates[j].getUTCMonth()+1)+"/"+dates[j].getFullYear()+"_PM_nj_"+arr[i].cin+"_"+arr[i].nom+"_"+arr[i].prenom+"'></td>"
+                                ;
+                            }
+                                ta+="</tr>";
+                        }
+                }
+                ta+="</table></div></div></div><br>";
+
+                document.getElementById("demo").innerHTML=ta;
+            }
+            else document.getElementById("demo").innerHTML="Aucune Inscriptions pour ce classe!";
+
+        }
+    }
+
+
+    function foo2() {
+        var classe = document.getElementById("classe").value;
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://localhost/projetweb/saisir.php";
+
+        //Envoie de la requete
+        xmlhttp.open("GET",url,true);
+
+        //Traiter la reponse
+        xmlhttp.onreadystatechange=function()
+        {  // alert(this.readyState+" "+this.status);
+            if(this.readyState==4 && this.status==200){
+                console.log(this.responseText);
+                document.getElementById("demo2").innerHTML=this.responseText;
+                
+                console.log(this.responseText);
+                //console.log(this.responseText);
+            }
+        }
+    }
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
 <script src="./assets/dist/js/smooth_scroll.js"></script>
 </body>
 </html>

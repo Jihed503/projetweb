@@ -9,9 +9,8 @@ include("connexion.php");
 
 
 $classe = $_REQUEST['classe'];
-//$classe = "INFO1-B";
 
-$req="select * from etudiant where Classe='$classe'";//$starting_limit,$perPage";
+$req="select * from etudiant where Classe='$classe'";
 $reqg="SELECT * FROM groupe  order by nom ASC ";
 
 $reponse = $pdo->query($req);
