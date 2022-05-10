@@ -9,7 +9,7 @@ Il s’agit d’un site web de gestion des étudiants et leurs absences. Notre s
 * **MySql** Base de donnée
 * **php**  langage serveur
 * **Ajax/jQuery** Frontend
-* 
+
 ### Fichiers: Structure de projet
 
 ```sh
