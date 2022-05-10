@@ -1,4 +1,9 @@
 # projetweb
+------
+
+Il s’agit d’un site web de gestion des étudiants et leurs absences. Notre site web devra regrouper toutes les fonctionnalités nécessaires au gestion des étudiants telles que : afficher tous les étudiants, ajouter un étudiants, modifier un groupe, gérer les absences… et toutes les fonctionnalités techniques comme : s’inscrire, s’authentifier, se déconnecter… Mais aussi, il devra répondre à des exigences non fonctionnelles par sa qualités et ses performances.
+
+### Main Files: Project Structure
 
 ```sh
 ├── .idea
