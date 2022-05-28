@@ -80,6 +80,6 @@ Instructions
 3. Amusez-vous!
 
 ### OR
-visit: https://gestion-absence.herokuapp.com
-email address: walid.saadd@gmail.com
+visit: https://gestion-absence.herokuapp.com <br>
+email address: walid.saadd@gmail.com <br>
 password: 123456789
