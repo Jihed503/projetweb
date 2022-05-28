@@ -81,3 +81,5 @@ Instructions
 
 ### OR
 visit: https://gestion-absence.herokuapp.com
+email address: walid.saadd@gmail.com
+password: 123456789
