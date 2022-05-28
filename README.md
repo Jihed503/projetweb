@@ -78,3 +78,6 @@ Instructions
 1. Faire un clone de projet pour l'avoir localement.
 2. Télecharger le fichier gestion_etudiant et l'importer dans votre base de donnée local.
 3. Amusez-vous!
+
+### OR
+visit: https://gestion-absence.herokuapp.com
